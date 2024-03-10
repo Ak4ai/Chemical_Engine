@@ -1,0 +1,25 @@
+/* CSS */
+.icone {
+  max-height: 3em;
+  max-width: 3em;
+}
+
+.caixa-item {
+  text-align: center;
+  min-width: 12%;
+  display: inline-block;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.caixa-item img {
+  margin-bottom: 5px;
+}
+
+.caixa-item p {
+  margin-bottom: 0;
+}
