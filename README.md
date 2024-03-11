@@ -48,7 +48,8 @@ O usuário pode misturar elementos arrastando e soltando, além de clicar em bot
 3. Misture elementos para descobrir novas combinações.
 4. Salve seu progresso usando a função de salvar jogo.
 
-![Exemplo de Interface]([https://i.imgur.com/ExemploImagem.png](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/3fcd56b9-a154-49f3-9a02-dddc9428a2cc))
+![image](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/8c96a38d-e66e-4b4b-b56c-21ff19781c8b)
+
 
 ## Personalização
 O Chemical Engine pode ser expandido adicionando mais elementos, imagens e combinações ao universo. Personalize conforme necessário para atender aos objetivos do seu jogo.
