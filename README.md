@@ -11,9 +11,7 @@ O universo é composto por elementos básicos que podem ser combinados para cria
 - Exibição: "Fogo"
 - Combinações: {"água": "vapor", "fogo": "sol"}
 - Item Inicial: Sim
-- [Imagem](![image](![image](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/002e2ee0-411c-4912-88ef-52b0cb52e720)
-)
-)
+- ![image](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/96d38d2e-2b6a-47cc-9daa-a7c77880417a)
 
 ## Estado do Jogo
 O estado do jogo mantém o rastreamento dos elementos descobertos e indescobertos, além de registrar tentativas e misturas feitas pelos jogadores.
