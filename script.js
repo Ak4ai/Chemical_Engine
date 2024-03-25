@@ -1,241 +1,285 @@
-// Motorzinho de Alquimia
-// Objetivos: Precisamos de um formato "simples" para que os alunos criem seu universo a partir dele:
-let universo = {
-  "fogo": {
-    displayName: "Fogo",
-    combinations: {
-      "água": "vapor",
-      "fogo": "sol"
-    },
-    isStartingItem: true,
-    imageURL: "https://i.pinimg.com/564x/d4/f7/0a/d4f70aad8b4e1fa70216a0edba3b94ac.jpg"
-  },
-  "água": {
-    displayName: "Água",
-    combinations: {
-      "fogo": "vapor",
-      "vapor": "nuvem",
-      "nuvem": "chuva"
-    },
-    isStartingItem: true,
-    imageURL:"https://i.pinimg.com/564x/b4/9d/52/b49d52d31fc36f5bf0adb528789b084d.jpg"
-  },
-  "sol": {
-    displayName: "Sol",
-    combinations: {
-      "chuva":"arcoiris"
-    },
-    isStartingItem: false,
-    imageURL: "https://i.pinimg.com/564x/93/06/5e/93065e53a0ba979174d6de26387c4751.jpg"
-  },
-  "nuvem": {
-    displayName: "Nuvem",
-    combinations: {
-      "água":"chuva"
-    },
-    isStartingItem: false,
-    imageURL: "https://i.pinimg.com/564x/a7/89/0a/a7890a1e0d9ac4cf6cc0de6e0507543f.jpg"
-  },
-  "chuva": {
-    displayName: "Chuva",
-    combinations: {
-      "sol":"arcoiris"
-    },
-    isStartingItem: false,
-    imageURL: "https://i.pinimg.com/564x/35/0f/01/350f019c5ebc52179e073240acd496ea.jpg"
-  },
-  "arcoiris": {
-    displayName: "Lgbt",
-    combinations: {
-    },
-    isStartingItem: false,
-    imageURL: "https://i.pinimg.com/564x/2e/74/7f/2e747f5f0a8253190b61d6a5619090a3.jpg"
-  }, 
-  "vapor": {
-    displayName: "Vapor",
-    combinations: {
-      "água": "nuvem"
-    },
-    isStartingItem: false,
-    imageURL: "https://i.pinimg.com/564x/e1/f6/40/e1f640c675ec89d64c971a00eca7d58f.jpg"
-  }
-}
+let draggableElems = document.querySelectorAll(".draggable-element");
+let initialX = 0,
+  initialY = 0;
+let moveElement = false;
+let deviceType = "";
 
-let criarEstadoDoJogo = function(universo){
-  let elementos = Object.keys(universo);
-  let hidratarEl = function(elID, universo){
-    let resultado = JSON.parse(JSON.stringify(universo[elID]));
-    resultado.isDescoberto = resultado.isStartingItem;
-    resultado.id = elID;
-    return resultado;
-  };
-
-  let indescobertos = {};
-  let descobertos = {};
-  elementos.map(elID=>{
-    if (universo[elID].isStartingItem){
-      descobertos[elID] = hidratarEl(elID, universo);
-    } else {
-      indescobertos[elID] = hidratarEl(elID, universo); 
-    }
-  });
-  let objJogo = {
-    "descobertos": descobertos,
-    "indescobertos": indescobertos,
-    "universo": universo,
-    "tentativas": 0,
-    "misturas":[]
-  };
-  // obj.universo é um objeto com dados brutos -- use para procuras,
-  // descobertos é um objeto de objetos com chaves .id e .descoberto
-  // indescobertos é um objeto com chaves .id e .descoberto adicionadas
-  // Eu vou procurar em indescobertos e MOVER PARA descobertos
-  return objJogo;
+// Events Object
+let events = {
+  mouse: {
+    down: "mousedown",
+    move: "mousemove",
+    up: "mouseup",
+  },
+  touch: {
+    down: "touchstart",
+    move: "touchmove",
+    up: "touchend",
+  },
 };
 
-let salvarJogo = function(estadoJogo){
-  localStorage.setItem("salvarAlquimia", JSON.stringify(estadoJogo));
-}
-
-let carregarJogo = function(){
-  let leituraLocal = localStorage.getItem("salvarAlquimia");
-  if (!leituraLocal){
-    return criarEstadoDoJogo(universo);
-  }
-  return JSON.parse(leituraLocal);
-}
-
-estadoJogo = carregarJogo();
-
-let obterImg = function(elID){
-  console.log("imagem para ",elID);
-  return  `<img class="icone" src="${estadoJogo.universo[elID].imageURL}">`;
-}
-
-let renderizarMistura = function(){
-  if (estadoJogo.misturas.length == 0){
-    $("#mistura").html("");
-    return;
-  } else if (estadoJogo.misturas.length == 1){
-    $("#mistura").html(`Misturar ${obterImg(estadoJogo.misturas[0])} com ???`);
+// Detect touch device
+const isTouchDevice = () => {
+  try {
+    document.createEvent("TouchEvent");
+    deviceType = "touch";
+    return true;
+  } catch (e) {
+    deviceType = "mouse";
+    return false;
   }
 };
 
-let descobrirNovo = function(novoEl){
-  let indescoberto = estadoJogo.indescobertos[novoEl];
-  if (indescoberto) {
-    indescoberto.isDescoberto = true;
-    delete estadoJogo.indescobertos[novoEl];
-    estadoJogo.descobertos[novoEl] = indescoberto;
-    renderizarDescobertos();
-  }
-}
+isTouchDevice();
 
-let fazerMistura = function(){
-  let doisEls = JSON.parse(JSON.stringify(estadoJogo.misturas));
-  estadoJogo.misturas = [];
+// Variável de controle para a receita
+let receitaUtilizada = false;
 
-  // Verifica se os elementos são válidos
-  if (estadoJogo.universo[doisEls[0]] && estadoJogo.universo[doisEls[1]]) {
-    let combinacoes = estadoJogo.universo[doisEls[0]].combinations;
-
-    // Verifica se há combinação definida
-    if (combinacoes && combinacoes.hasOwnProperty(doisEls[1])) {
-      let novoElemento = combinacoes[doisEls[1]];
-
-      // Verifica se o novo elemento existe no universo
-      if (estadoJogo.universo[novoElemento]) {
-        if (!estadoJogo.descobertos.hasOwnProperty(novoElemento)) {
-          $("#msg").html(`Parabéns! Você descobriu que ${obterImg(doisEls[0])} e ${obterImg(doisEls[1])} formam ${obterImg(novoElemento)}`);
-          descobrirNovo(novoElemento);
-        } else {
-          $("#msg").html(`Você já descobriu que ${obterImg(doisEls[0])} e ${obterImg(doisEls[1])} formam ${obterImg(novoElemento)}`);
-        }
-      } else {
-        console.error(`Novo elemento "${novoElemento}" não encontrado no universo.`);
-      }
-    } else {
-      $("#msg").html(`Bem, ${obterImg(doisEls[0])} e ${obterImg(doisEls[1])} não se misturam`);
+const receitas = {
+  misturarDragMeEToo: () => {
+    // Verificar se a receita já foi utilizada
+    if (receitaUtilizada) {
+      console.log("A receita já foi utilizada uma vez. Não é possível criar mais elementos.");
+      return;
     }
-  } else {
-    console.error(`Elementos inválidos: ${doisEls[0]}, ${doisEls[1]}`);
-  }
-}
 
-let misturarItem = function(evt){
-  let elID = $(evt.currentTarget).attr("data-id");
-  if (estadoJogo.misturas.length === 0){
-    estadoJogo.misturas.push(elID);
-  } else {
-    // misturas tem 1 elemento
-    estadoJogo.misturas.push(elID);
-    fazerMistura();
-  }
-  return renderizarMistura();
-}
+    // Verificar se Drag Me e Drag Me Too estão sobrepondo a área de mistura
+    const H = document.querySelector('.draggable-element[data-symbol="H"]');
+    const O = document.querySelector('.draggable-element[data-symbol="O"]');
+    const areaMistura = document.querySelector('.dragging-area');
+    
+    if (!H || !O || !areaMistura) {
+      console.error("Os elementos Drag Me, Drag Me Too ou a área de mistura não foram encontrados.");
+      return;
+    }
 
-let renderizarDescobertos = function(){ 
-  let mostrarItem = function(oItem) {
-    return `<div class="caixa-item" draggable="true" data-id="${oItem.id}">
-              <div class="coluna">
-                <p>${oItem.displayName}</p>
-                <img class="icone" src="${oItem.imageURL}">
-              </div>
-              <button class="misturar" data-id="${oItem.id}">Misturar</button>
-            </div>`;
-  };
-  $("#contador").html(`${Object.keys(estadoJogo.descobertos).length}/${Object.keys(estadoJogo.universo).length} coisas`);
-  $("#descobertos").html("");
-  $(".misturar").off("click");
-  let chavesDescobertos = Object.keys(estadoJogo.descobertos);
-  chavesDescobertos.map(elID=>{
-    let oItem = estadoJogo.descobertos[elID];
-    $("#descobertos").append(mostrarItem(oItem));
-  });
-  $(".misturar").on("click", misturarItem);  // Movido para dentro da função
+    const HRect = H.getBoundingClientRect();
+    const ORect = O.getBoundingClientRect();
+    const areaRect = areaMistura.getBoundingClientRect();
 
-  // Adiciona a classe "caixa-item" e atributo "draggable" aos elementos
-  $(".caixa-item").addClass("caixa-item").attr("draggable", "true");
-
-  $(".caixa-item").on("dragstart", function (event) {
-    // Armazene o ID do elemento arrastado
-    event.originalEvent.dataTransfer.setData("text/plain", $(this).attr("data-id"));
-  });
-
-  $(".caixa-item").on("dragover", function (event) {
-    // Impede o comportamento padrão para permitir o soltar
-    event.preventDefault();
-  });
-
-  $(".caixa-item").on("drop", function (event) {
-    // Impede o comportamento padrão para permitir o soltar
-    event.preventDefault();
-
-    // Obtém o ID do elemento arrastado
-    let draggedElement = event.originalEvent.dataTransfer.getData("text/plain");
-
-    // Obtém o ID do elemento alvo
-    let targetElement = $(this).attr("data-id");
-
-    // Verifica se o universo possui o elemento arrastado e o elemento alvo
     if (
-      estadoJogo.universo[draggedElement] &&
-      estadoJogo.universo[targetElement] &&
-      estadoJogo.universo[draggedElement].combinations &&
-      estadoJogo.universo[draggedElement].combinations[targetElement]
+      HRect.right >= areaRect.left &&
+      HRect.left <= areaRect.right &&
+      HRect.bottom >= areaRect.top &&
+      HRect.top <= areaRect.bottom &&
+      ORect.right >= areaRect.left &&
+      ORect.left <= areaRect.right &&
+      ORect.bottom >= areaRect.top &&
+      ORect.top <= areaRect.bottom
     ) {
-      // Realiza a mistura
-      estadoJogo.misturas = [draggedElement, targetElement];
-      fazerMistura();
+      // Ambos Drag Me e Drag Me Too estão sobrepondo a área de mistura
+      // Verificar se a receita já foi utilizada
+      if (receitaUtilizada) {
+        console.log("A receita já foi utilizada uma vez. Não é possível criar mais elementos.");
+        return;
+      }
 
-      // Mostra o novo elemento descoberto
-      descobrirNovo(estadoJogo.universo[draggedElement].combinations[targetElement]);
+      // Criar novo elemento
+      const newElement = document.createElement('div');
+      newElement.classList.add('draggable-element');
+      newElement.classList.add('element');
+      newElement.textContent = 'H2O';
+      newElement.setAttribute('data-symbol', 'H2O');
 
-      // Atualiza a interface
-      renderizarMistura();
-      renderizarDescobertos();
+      // Criar elemento filho para o tooltip
+      const newTooltip = document.createElement('div');
+      newTooltip.classList.add('main-tooltip');
+
+      // Adicionar o conteúdo do tooltip
+      const tooltipContent = `
+          <table>
+              <tr>
+                  <td rowspan="2" style="width: 60px;">
+                      <img src="https://exemplo.com/caminho-para-imagem-helio.png" alt="Agua" style="width: 60px;">
+                  </td>
+                  <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: larger;">Água</td>
+              </tr>
+              <tr>
+                  <td style="font-style: italic; font-size: xx-small;">Substância Química</td>
+              </tr>
+              <tr>
+                  <td colspan="2">Água: Uma substância composta por hidrogênio e oxigênio.</td>
+              </tr>
+          </table>
+      `;
+      newTooltip.innerHTML = tooltipContent;
+
+      // Adicionar o elemento filho ao novo elemento
+      newElement.appendChild(newTooltip);
+
+      // Adicionar novo elemento ao DOM
+      document.getElementById('container').appendChild(newElement);
+
+
+      // Aplicar funcionalidade de arrastar para o novo elemento
+      makeDraggable(newElement);
+
+      // Definir a variável de controle para indicar que a receita foi utilizada
+      receitaUtilizada = true;
+
+      // Adiciona event listeners para mostrar/ocultar os tooltips
+      const elements = document.querySelectorAll('.draggable-element');
+
+      elements.forEach(element => {
+          const tooltip = element.querySelector('.main-tooltip');
+          const symbol = element.getAttribute('data-symbol');
+
+          element.addEventListener('mouseenter', () => {
+              tooltip.style.display = 'block';
+              tooltip.innerHTML = getTooltipContent(symbol);
+          });
+
+          element.addEventListener('mouseleave', () => {
+              tooltip.style.display = 'none';
+          });
+
+          element.addEventListener('mousemove', event => {
+              const x = event.clientX;
+              const y = event.clientY;
+
+              tooltip.style.left = `${x + 10}px`;
+              tooltip.style.top = `${y + 10}px`;
+          });
+      });
     }
+  }
+};
+
+
+
+// Função para tornar um elemento arrastável
+const makeDraggable = (elem) => {
+  elem.addEventListener(events[deviceType].down, (e) => {
+    e.preventDefault();
+    initialX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
+    initialY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
+    moveElement = true;
+  });
+
+  elem.addEventListener(events[deviceType].move, (e) => {
+    if (moveElement) {
+      e.preventDefault();
+      let newX = !isTouchDevice() ? e.clientX : e.touches[0].clientX;
+      let newY = !isTouchDevice() ? e.clientY : e.touches[0].clientY;
+      elem.style.top = elem.offsetTop - (initialY - newY) + "px";
+      elem.style.left = elem.offsetLeft - (initialX - newX) + "px";
+      initialX = newX;
+      initialY = newY;
+    }
+  });
+
+  elem.addEventListener(events[deviceType].up, () => {
+    moveElement = false;
+
+    // Verificar se o elemento está sobrepondo a área de mistura
+    const areaMistura = document.querySelector('.dragging-area');
+    const elemRect = elem.getBoundingClientRect();
+    const areaRect = areaMistura.getBoundingClientRect();
+
+    if (
+      elemRect.right >= areaRect.left &&
+      elemRect.left <= areaRect.right &&
+      elemRect.bottom >= areaRect.top &&
+      elemRect.top <= areaRect.bottom
+    ) {
+      // Elemento está sobrepondo a área de mistura, chame a função de receita apropriada
+      receitas.misturarDragMeEToo(); // Você pode adicionar mais lógica aqui para diferentes receitas
+    }
+  });
+
+  elem.addEventListener("mouseleave", () => {
+    moveElement = false;
   });
 };
 
-renderizarDescobertos();
+// Aplicar funcionalidade de arrastar para todos os elementos arrastáveis
+draggableElems.forEach((elem) => {
+  makeDraggable(elem);
+});
+
+// Adiciona event listeners para mostrar/ocultar os tooltips
+const elements = document.querySelectorAll('.draggable-element');
+
+elements.forEach(element => {
+    const tooltip = element.querySelector('.main-tooltip');
+    const symbol = element.getAttribute('data-symbol');
+
+    element.addEventListener('mouseenter', () => {
+        tooltip.style.display = 'block';
+        tooltip.innerHTML = getTooltipContent(symbol);
+    });
+
+    element.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+    });
+
+    element.addEventListener('mousemove', event => {
+        const x = event.clientX;
+        const y = event.clientY;
+
+        tooltip.style.left = `${x + 10}px`;
+        tooltip.style.top = `${y + 10}px`;
+    });
+});
+
+// Função para obter o conteúdo da tooltip com base no símbolo do elemento
+function getTooltipContent(symbol) {
+    // Aqui você pode adicionar lógica para obter o conteúdo da tooltip com base no símbolo do elemento
+    // Por enquanto, estou fornecendo um exemplo estático para demonstração
+    if (symbol === 'H') {
+        return `
+            <table>
+                <tr>
+                    <td rowspan="2" style="width: 60px;">
+                        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXZ5ZXloMjVwb3gyd3k0bmsyZDU4aDU2bjg3c3IwbGVlNTN1cWloNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VbQk7UzSrryWjuF7Yb/giphy.gif" alt="Hidrogenio" style="width: 60px;">
+                    </td>
+                    <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: 3vh;">Hidrogenio</td>
+                </tr>
+                <tr>
+                    <td style="font-style: italic; font-size: xx-small;">Elemento Quimico</td>
+                </tr>
+                <tr>
+                    <td colspan="2">MA: 1,008 <br>RA: 25(53) <br>VM: 1,14×10-5 m3/mol <br>Config E:	1s1</td>
+                </tr>
+            </table>
+        `;
+    } else if (symbol === 'He') {
+        return `
+            <table>
+                <tr>
+                    <td rowspan="2" style="width: 60px;">
+                        <img src="https://exemplo.com/caminho-para-imagem-helio.png" alt="Hélio" style="width: 60px;">
+                    </td>
+                    <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: larger;">Hélio</td>
+                </tr>
+                <tr>
+                    <td style="font-style: italic; font-size: xx-small;">Elemento Químico</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Hélio: O segundo elemento mais abundante no universo.</td>
+                </tr>
+            </table>
+        `;
+    }
+    else if (symbol === 'H2O') {
+      return `
+          <table>
+              <tr>
+                  <td rowspan="2" style="width: 60px;">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Water_molecule_rotation_animation_large.gif" alt="Agua" style="width: 60px;">
+                  </td>
+                  <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: larger;">Agua</td>
+              </tr>
+              <tr>
+                  <td style="font-style: italic; font-size: xx-small;">Substancia Quimica</td>
+              </tr>
+              <tr>
+                  <td colspan="2">Agua: A substancia da vida</td>
+              </tr>
+          </table>
+      `;
+  }
+    // Adicione mais lógica conforme necessário para outros elementos
+    // ou retorne um conteúdo padrão caso o símbolo do elemento não corresponda a nenhum caso específico
+    return 'Conteúdo da tooltip para ' + symbol;
+}

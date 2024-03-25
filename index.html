@@ -1,25 +1,76 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Projeto Replit</title>
-  <!-- Adicione a linha abaixo para incluir o jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
-</head>
-
-<body>
-  <div id="novidades">
-    <h3 id="mensagem"></h3>
-    <h4 id="mistura"></h4>
-  </div>
-  <div id="zona-descobertos">
-    <h5>Descobertos: <span id="contador"></span></h5>
-    <div id="descobertos" class="descobertos-container"></div>
-  </div>
-</body>
-
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draggable Div</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Tooltip */
+      .main-tooltip {
+        position: fixed;
+        z-index: 9999;
+        background: rgba(0, 0, 0, 0.195);
+        color: #fff;
+        padding: 5px;
+        border-radius: 5px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="dragging-area">
+        <p class="area-text">Area de Mistura:</p> <!-- Texto adicionado -->
+      </div>
+      <div class="draggable-element element" data-symbol="H" data-row="1" data-col="1">
+        <p>H</p>
+        <p>Hydrogen</p>
+        <div class="main-tooltip">Hidrogênio: O elemento mais simples e abundante do universo.</div>
+      </div>
+      
+      <div class="draggable-element element" data-symbol="He" data-row="1" data-col="18">
+        <p>He</p>
+        <p>Helium</p>
+        <div class="main-tooltip">Hélio: O segundo elemento mais abundante no universo.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Li" data-row="2" data-col="1">
+        <p>Li</p>
+        <p>Lithium</p>
+        <div class="main-tooltip">Lítio: Um metal alcalino macio e prateado.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Be" data-row="2" data-col="2">
+        <p>Be</p>
+        <p>Beryllium</p>
+      </div>
+      <div class="draggable-element element" data-symbol="B" data-row="2" data-col="13">
+        <p>B</p>
+        <p>Boron</p>
+      </div>
+      <div class="draggable-element element" data-symbol="C" data-row="2" data-col="14">
+        <p>C</p>
+        <p>Carbon</p>
+      </div>
+      <div class="draggable-element element" data-symbol="N" data-row="2" data-col="15">
+        <p>N</p>
+        <p>Nitrogen</p>
+      </div>
+      <div class="draggable-element element" data-symbol="O" data-row="2" data-col="16">
+        <p>O</p>
+        <p>Oxygen</p>
+      </div>
+      <div class="draggable-element element" data-symbol="F" data-row="2" data-col="17">
+        <p>F</p>
+        <p>Fluorine</p>
+      </div>
+      <div class="draggable-element element" data-symbol="Ne" data-row="2" data-col="18">
+        <p>Ne</p>
+        <p>Neon</p>
+      </div>
+    
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
 </html>
