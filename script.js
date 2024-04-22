@@ -81,7 +81,11 @@
                         newElement.textContent = elementoResultante;
                         newElement.setAttribute('data-symbol', elementoResultante);
 
-                        
+                        // Verificar se existe um data-mix para o novo elemento
+                        const dataMixForNewElement = getDatamix(elementoResultante);
+                        if (dataMixForNewElement) {
+                            newElement.setAttribute('data-mix', dataMixForNewElement);
+                        }
     
                         // Definir a posição inicial no centro da tela
                         const screenWidth = window.innerWidth;
@@ -204,7 +208,7 @@
   function getTooltipContent(symbol) {
       // Aqui você pode adicionar lógica para obter o conteúdo da tooltip com base no símbolo do elemento
       // Por enquanto, estou fornecendo um exemplo estático para demonstração
-      if (symbol === 'H') {
+      if (symbol === 'H2') {
           return `
               <table>
                   <tr>
@@ -261,3 +265,16 @@
       // ou retorne um conteúdo padrão caso o símbolo do elemento não corresponda a nenhum caso específico
       return 'Conteúdo da tooltip para ' + symbol;
   }
+
+  function getDatamix(symbol) {
+    let dataMix = ''; // Inicializa a string de data-mix vazia
+
+    // Adicione a lógica para determinar o data-mix com base no símbolo do elemento
+    if (symbol === 'H2') {
+        dataMix = 'H2,O,H2O';
+    } else if (symbol === 'H2O') {
+        dataMix = 'H2O,O,H2O2';
+    }
+
+    return dataMix;
+}
