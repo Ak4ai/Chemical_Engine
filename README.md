@@ -1,88 +1,264 @@
-# Chemical Engine - Motorzinho de Alquimia
+# Chemical Engine
 
-## Visão Geral
-O Chemical Engine é um motor simples para criar um universo de alquimia, onde os jogadores podem combinar elementos para descobrir novos. Este modelo fornece uma estrutura inicial fácil de entender e expandir para criar jogos educacionais ou de entretenimento baseados em princípios de alquimia.
+Chemical Engine é um projeto JavaScript que permite a interação e mistura de elementos químicos de forma dinâmica em uma interface de usuário.
 
-## Estrutura do Universo
-O universo é composto por elementos básicos que podem ser combinados para criar novos elementos. Cada elemento possui um nome, uma exibição, uma lista de combinações possíveis e uma URL de imagem representativa.
+## Introdução
 
-### Exemplo de Elemento:
-- Nome: Fogo
-- Exibição: "Fogo"
-- Combinações: {"água": "vapor", "fogo": "sol"}
-- Item Inicial: Sim
-- ![image](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/96d38d2e-2b6a-47cc-9daa-a7c77880417a)
+Chemical Engine é uma biblioteca que fornece funcionalidades para arrastar e soltar elementos químicos em uma área específica, possibilitando a mistura entre eles para criar novas substâncias. Este projeto foi desenvolvido com o objetivo de facilitar a visualização e compreensão de reações químicas de maneira interativa.
 
-## Estado do Jogo
-O estado do jogo mantém o rastreamento dos elementos descobertos e indescobertos, além de registrar tentativas e misturas feitas pelos jogadores.
+O projeto utiliza JavaScript para criar elementos arrastáveis e interativos, detectando eventos de mouse e toque para garantir uma experiência de usuário consistente em diferentes dispositivos. Além disso, as informações sobre os elementos químicos são exibidas em tooltips dinâmicas, proporcionando detalhes como nome, propriedades e imagens relacionadas.
 
-### Funções Principais:
-- `criarEstadoDoJogo(universo)`: Inicializa o estado do jogo com base no universo fornecido.
-- `salvarJogo(estadoJogo)`: Salva o estado do jogo no armazenamento local.
-- `carregarJogo()`: Carrega o estado do jogo do armazenamento local ou cria um novo se não existir.
-- `descobrirNovo(novoEl)`: Move um elemento indescoberto para a lista de elementos descobertos.
-- `fazerMistura()`: Realiza a mistura de dois elementos e verifica se resulta em um novo elemento descoberto.
+## Funcionalidades Principais
 
-## Interface Gráfica
-O Chemical Engine inclui funções para renderizar a interface gráfica, exibindo elementos descobertos, misturas e mensagens informativas.
+- Arraste e solte elementos químicos: Os usuários podem arrastar elementos químicos pré-definidos e soltá-los em uma área de mistura.
+- Mistura dinâmica: Ao soltar os elementos em uma área específica, o Chemical Engine verifica as combinações possíveis e cria novos elementos resultantes da mistura.
+- Exibição de informações: As tooltips exibem informações detalhadas sobre os elementos químicos, incluindo nome, propriedades e imagens ilustrativas.
+<br><br><br>
+# Modelo HTML
 
-### Funções de Renderização:
-- `obterImg(elID)`: Obtém a tag HTML da imagem para um determinado elemento.
-- `renderizarMistura()`: Atualiza a exibição da mistura atual.
-- `renderizarDescobertos()`: Renderiza a lista de elementos descobertos na interface gráfica.
+O modelo HTML fornecido permite a integração rápida do Chemical Engine em qualquer projeto web. Abaixo estão as instruções sobre como interagir e modificar o código para criar novos elementos, misturas e dados.
 
-## Interação do Usuário
-O usuário pode misturar elementos arrastando e soltando, além de clicar em botões para realizar misturas e descobrir novos elementos.
+### Interagindo com o Código
 
-### Drag and Drop:
-- Elementos podem ser arrastados para misturar uns com os outros.
-- A mistura é realizada quando um elemento é solto sobre outro.
+Para interagir com o código HTML:
 
-### Cliques e Botões:
-- Clicar em um elemento revela informações sobre ele.
-- Clicar no botão "Misturar" inicia a combinação dos elementos selecionados.
+1. Copie o código HTML fornecido para o seu projeto.
+2. Modifique os elementos existentes conforme necessário, incluindo símbolo, nome, posição na tabela periódica e dados de mistura.
+3. Adicione novos elementos seguindo a estrutura dos elementos existentes.
 
-## Como Jogar
-1. Arraste e solte elementos para misturar.
-2. Clique em elementos descobertos para obter mais informações.
-3. Misture elementos para descobrir novas combinações.
-4. Salve seu progresso usando a função de salvar jogo.
+### Modificando Elementos
 
-![image](https://github.com/Ak4ai/Chemical_Engine/assets/129908980/8c96a38d-e66e-4b4b-b56c-21ff19781c8b)
+Cada elemento químico é representado por uma `div` com a classe `draggable-element`. Para modificar um elemento, você pode editar os atributos `data-symbol`, `data-mix` e outros conforme necessário.
 
+- `data-symbol`: O símbolo do elemento químico.
+- `data-mix`: As combinações possíveis deste elemento com outros elementos, separados por espaços. Cada combinação é representada por uma sequência de símbolos separados por vírgula.
 
-## Personalização
-O Chemical Engine pode ser expandido adicionando mais elementos, imagens e combinações ao universo. Personalize conforme necessário para atender aos objetivos do seu jogo.
+### Criando Novos Elementos
 
-## Licença
-Este projeto é fornecido sob a [Licença MIT](LICENSE).
+Para criar novos elementos químicos:
 
-Divirta-se explorando o mundo da alquimia com o Chemical Engine!
+1. Copie e cole uma das `divs` existentes que representam os elementos.
+2. Modifique os atributos `data-symbol`, `data-mix` e outras informações conforme necessário.
+3. Certifique-se de seguir a estrutura e classes existentes para garantir o funcionamento correto do Chemical Engine.
 
-# HTML, CSS, JS (Auto Refresh)
+### Adicionando Dados de Mistura
 
-This template is a starter for building a website with HTML, CSS and JS, powered by [Vite](https://vitejs.dev/). HTML provides the basic structure, CSS controls formatting, and JavaScript controls the behavior of different elements.
+Os dados de mistura são definidos pelo atributo `data-mix` em cada elemento. Este atributo especifica as combinações possíveis do elemento com outros elementos, indicando os produtos resultantes da mistura.
 
-Hit run to see this project in action. It will auto-refresh as you edit the HTML, CSS and JS files.
+- Cada combinação é representada por uma sequência de símbolos separados por vírgula.
+- Os produtos resultantes são separados por espaços.
 
-## Disable Auto Refresh
+Por exemplo, `data-mix="H,O,H2 H2O"` indica que o elemento H pode se combinar com O para formar H2 ou com H2O para formar H2O2.
 
-If you find the auto refresh getting in your way, go to [vite.config.js](./vite.config.js) and update it set `hmr` to false to disable hot module reloading (HMR). The full config will look like this:
+## Exemplo de Código HTML
 
-```js
-export default defineConfig({
-  plugins: [],
-  server: {
-    host: '0.0.0.0',
-    hmr: false, // Change this line to `false` disable auto-refreshing.
-  }
-})
+Aqui está um exemplo de como o código HTML pode ser modificado para adicionar um novo elemento químico:
+
+```html
+      <div class="draggable-element element" data-symbol="H" data-mix="H,H,H2" data-row="1" data-col="1">
+        <p>H</p>
+        <p>Hydrogen</p>
+        <div class="main-tooltip">Hidrogênio: O elemento mais simples e abundante do universo.</div>
+      </div>
 ```
+<br><br><br>
+# Exemplo de Código JavaScript
 
-## Packages
+Aqui está uma explicação das funcionalidades do código JavaScript e como interagir e modificar com ele:
 
-Because this template uses Vite to build your code, you can add install and use npm packages. Simple open the Packager tool to search and manage your packages.
+### Detecção de Dispositivo de Toque
 
-## Learn More
+A função `isTouchDevice()` é responsável por detectar se o dispositivo possui capacidade de toque. Isso é útil para determinar quais eventos de interação serão usados, como eventos de mouse ou de toque.
 
-Check out [the vite docs](https://vitejs.dev) to learn more about configuring a frontend application.
+Para interagir com essa função, você pode ajustar o comportamento com base no tipo de dispositivo detectado. Por exemplo, você pode modificar a lógica para eventos específicos de dispositivos de toque ou de mouse.
+
+### Misturar Elementos
+
+A função `misturarElementos(elementoSoltado)` é responsável por verificar se um elemento solto está sobrepondo a área de mistura e realizar combinações químicas com base nos dados de mistura dos elementos.
+
+Para modificar essa função, você pode adicionar novas combinações químicas para elementos existentes ou criar lógica para misturas com novos elementos adicionados ao projeto. Por exemplo, você pode adicionar novos dados de mistura para elementos criados posteriormente na função `makeDraggable(elem)`.
+
+### Tornar Elemento Arrastável
+
+A função `makeDraggable(elem)` é responsável por tornar um elemento HTML arrastável. Ela lida com eventos de mouse ou de toque para permitir o movimento do elemento na tela.
+
+Para interagir com essa função, você pode ajustar o comportamento do arraste, como a sensibilidade ao movimento ou a restrição de áreas de soltura. Você também pode adicionar lógica adicional para eventos de arraste, como animações ou atualizações visuais.
+
+### Adicionar Event Listeners para Tooltips
+
+Os event listeners adicionados para mostrar e ocultar tooltips permitem que os usuários vejam informações adicionais sobre os elementos químicos ao passar o mouse sobre eles.
+
+Para modificar esse comportamento, você pode ajustar o estilo ou o conteúdo das tooltips para fornecer informações mais relevantes ou personalizadas sobre os elementos.
+
+### Obter Conteúdo da Tooltip e Data Mix
+
+As funções `getTooltipContent(symbol)` e `getDatamix(symbol)` são responsáveis por fornecer o conteúdo das tooltips com base no símbolo do elemento e por determinar os dados de mistura para um determinado elemento, respectivamente.
+
+Para interagir com essas funções, você pode adicionar lógica adicional para personalizar o conteúdo das tooltips ou os dados de mistura com base nas necessidades do projeto ou nos requisitos dos novos elementos adicionados.
+
+## Exemplos de Adição de Tooltips e Data Mix para Novos Elementos
+
+Aqui estão exemplos de como você pode criar tooltips e data mix para novos elementos, baseando-se no código existente:
+
+### Exemplo de getTooltipContent para Novos Elementos
+
+Você pode adicionar um novo caso à função `getTooltipContent(symbol)` para cada novo elemento que deseja adicionar ao projeto. Aqui está um exemplo de como adicionar um tooltip para o elemento "Na" (Sódio):
+
+```javascript
+function getTooltipContent(symbol) {
+    if (symbol === 'Na') {
+        return `
+            <table>
+                <tr>
+                    <td rowspan="2" style="width: 60px;">
+                        <img src="caminho-para-imagem-natrio.png" alt="Sódio" style="width: 60px;">
+                    </td>
+                    <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: larger;">Sódio</td>
+                </tr>
+                <tr>
+                    <td style="font-style: italic; font-size: xx-small;">Elemento Químico</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Sódio: Um metal alcalino muito reativo.</td>
+                </tr>
+            </table>
+        `;
+    }
+    // Adicione mais casos conforme necessário para outros elementos
+    // ...
+    // Se o símbolo do elemento não corresponder a nenhum caso específico, retorne um conteúdo padrão
+    return 'Conteúdo da tooltip para ' + symbol;
+}
+```
+## Exemplo de getDatamix para Novos Elementos
+
+Você pode adicionar lógica à função getDatamix(symbol) para determinar os dados de mistura para novos elementos. Aqui está um exemplo de como adicionar dados de mistura para o elemento "Na" (Sódio):
+
+```javascript
+function getDatamix(symbol) {
+    if (symbol === 'Na') {
+        return 'Na,Cl,NaCl';
+    }
+    // Adicione mais casos conforme necessário para outros elementos
+    // ...
+    // Se o símbolo do elemento não corresponder a nenhum caso específico, retorne uma string vazia ou padrão
+    return '';
+}
+```
+<br><br><br>
+# Estilização CSS para Novos Programadores
+
+Aqui estão as explicações e funcionalidades do código CSS fornecido, juntamente com orientações para novos programadores:
+
+### Tooltips (Dicas de Ferramentas)
+
+O estilo `.main-tooltip` define o visual das tooltips exibidas quando um elemento é clicado ou passado sobre. Aqui está uma explicação dos principais atributos:
+
+- `border`: Define a largura e o estilo da borda da tooltip.
+- `color`: Define a cor do texto dentro da tooltip.
+- `box-shadow`: Adiciona uma sombra à tooltip para criar um efeito de elevação.
+- `border-radius`: Define o raio dos cantos da tooltip, tornando-os arredondados.
+- `padding`: Adiciona espaçamento interno entre o conteúdo da tooltip e suas bordas.
+- `background-color`: Define a cor de fundo da tooltip.
+- `transition`: Define uma transição suave para todas as propriedades afetadas, com duração de 0.2 segundos.
+- `max-width`: Define a largura máxima da tooltip para evitar que ela se estenda demais.
+
+### Corpo da Página (Body)
+
+O estilo para o `body` define o plano de fundo gradiente da página.
+
+### Container Principal (#container)
+
+- `height`: Define a altura do container principal.
+- `width`: Define a largura do container principal.
+- `position`: Define o método de posicionamento do container (relativo).
+- `display`: Define o método de exibição do container (grid).
+- `grid-template-columns`: Define o layout de colunas do grid.
+- `grid-gap`: Define o espaçamento entre as células do grid.
+
+### Elementos Arrastáveis (.draggable-element)
+
+- `position`: Define o método de posicionamento dos elementos (absoluto).
+- `background-color`: Define a cor de fundo dos elementos arrastáveis.
+- `font-size`: Define o tamanho da fonte dos elementos.
+- `width` e `height`: Define as dimensões dos elementos.
+- `display` e `place-items`: Centralizam o conteúdo dos elementos horizontal e verticalmente.
+- `font-family`: Define a família de fontes a ser usada para o texto dos elementos.
+- `border-radius`: Define o raio dos cantos dos elementos para torná-los arredondados.
+- `cursor`: Define o cursor do mouse quando passa sobre os elementos (indicando que são arrastáveis).
+
+### Área de Arraste (.dragging-area)
+
+- `position`: Define o método de posicionamento da área de arraste (absoluto).
+- `top` e `left`: Posicionam a área de arraste horizontal e verticalmente.
+- `transform`: Move a área de arraste horizontalmente em relação ao centro.
+- `width` e `height`: Define as dimensões da área de arraste.
+- `background-color`: Define a cor de fundo da área de arraste.
+- `border`: Define o estilo da borda da área de arraste.
+
+### Texto da Área de Arraste (.area-text)
+
+- `position`: Define o método de posicionamento do texto (absoluto).
+- `top` e `left`: Posicionam o texto horizontal e verticalmente em relação à área de arraste.
+- `color`: Define a cor do texto da área de arraste.
+- `font-size`: Define o tamanho da fonte do texto da área de arraste.
+- `font-family`: Define a família de fontes a ser usada para o texto da área de arraste.
+
+### Linhas 1 e 2 dos Elementos
+
+Os estilos específicos para cada linha e coluna dos elementos iniciados com o programa determinam suas posições na grade.
+
+Espero que essas explicações ajudem a compreender e modificar o código CSS conforme necessário!
+<br>
+<br>
+<br>
+<br>
+# Tutorial Rápido: Importando o Código para o VSCode e Usando o Vite
+
+Este tutorial orienta como você pode importar o código deste projeto para o VSCode e usar o Vite para executá-lo localmente.
+
+### Passo 1: Clone o Repositório
+
+Abra o terminal e clone o repositório usando o seguinte comando:
+
+```bash
+git clone <URL do Repositório>
+```
+### Passo 2: Abra o Projeto no VSCode
+Navegue até o diretório clonado e abra-o no VSCode com o seguinte comando:
+```bash
+cd <nome do diretório>
+code .
+````
+### Passo 3: Instale as Dependências
+Abra o terminal integrado do VSCode (Ctrl + `) e instale as dependências do projeto com npm ou yarn:
+```bash
+npm install
+# ou
+yarn
+````
+### Passo 4: Execute o Projeto com Vite
+Após a instalação das dependências, execute o projeto usando o Vite ou baixe a extensao vite na loja do VS code:
+```bash
+npm run dev
+# ou
+yarn dev
+````
+### Passo 5: Visualize no Navegador
+Abra o navegador e acesse http://localhost:3000 para visualizar o projeto em execução.
+
+Agora você está pronto para explorar e modificar o projeto no seu ambiente local usando o VSCode e o Vite!
+
+Se tiver alguma dúvida ou encontrar algum problema, consulte a documentação oficial do Vite ou sinta-se à vontade para abrir uma issue no repositório.c
+<br><br><br>
+## Conclusão
+
+Este repositório contém um projeto simples de arrastar e soltar elementos HTML, com tooltips informativas para cada elemento. Abaixo está um resumo das principais funcionalidades e estrutura do projeto:
+
+- **HTML**: O arquivo HTML define a estrutura básica da página, incluindo os elementos arrastáveis e a área de mistura.
+
+- **CSS**: O arquivo CSS estiliza os elementos da página, definindo cores, tamanhos e posições para criar uma interface agradável e responsiva.
+
+- **JavaScript**: O arquivo JavaScript contém funções para tornar os elementos arrastáveis e exibir tooltips informativas quando clicados.
+
+- **Funcionalidades**: Os elementos podem ser arrastados e soltos na área de mistura. Quando clicados, exibem uma tooltip com informações sobre o elemento.
