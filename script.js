@@ -80,12 +80,19 @@
                         newElement.classList.add('element');
                         newElement.textContent = elementoResultante;
                         newElement.setAttribute('data-symbol', elementoResultante);
-                        newElement.setAttribute('data-row', 1);
-                        newElement.setAttribute('data-col', 9);
 
+                        
+    
+                        // Definir a posição inicial no centro da tela
+                        const screenWidth = window.innerWidth;
+                        const screenHeight = window.innerHeight;
+                        const newElementWidth = 100; // largura do novo elemento (ajustar conforme necessário)
+                        const newElementHeight = 100; // altura do novo elemento (ajustar conforme necessário)
+                        newElement.style.left = `${(screenWidth - newElementWidth) / 2}px`;
+                        newElement.style.top = `${(screenHeight - newElementHeight) / 2}px`;
+                    
                         const newTooltip = document.createElement('div');
                         newTooltip.classList.add('main-tooltip');
-
                         const tooltipContent = getTooltipContent(elementoResultante); // Use a função para obter o conteúdo da tooltip
                         newTooltip.innerHTML = tooltipContent;
 
