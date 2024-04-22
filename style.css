@@ -12,7 +12,7 @@
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-radius: 5px;
-  transition: all ease .3s;
+  transition: all ease .2s;
   max-width: 350px;
 }
 
@@ -43,6 +43,16 @@ body {
   font-family: "Poppins", sans-serif;
   border-radius: 0.7em;
   cursor: move;
+}
+
+.dynamic-tooltip .main-tooltip {
+  position: absolute;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  display: none;
 }
 
 .dragging-area {
