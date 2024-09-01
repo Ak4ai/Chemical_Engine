@@ -18,9 +18,13 @@
         border-radius: 5px;
         display: none;
       }
+      #atomCanvas {
+          display: none; /* Oculta o canvas, pois não é necessário visualmente */
+      }
     </style>
   </head>
   <body>
+    <canvas id="atomCanvas" width="200" height="200"></canvas>
     <div id="container">
       <div class="dragging-area">
         <p class="area-text">Area de Mistura:</p> <!-- Texto adicionado -->
@@ -30,8 +34,7 @@
         <p>Hydrogen</p>
         <div class="main-tooltip">Hidrogênio: O elemento mais simples e abundante do universo.</div>
       </div>
-      
-      <div class="draggable-element element" data-symbol="He" data-row="1" data-col="18">
+      <div class="draggable-element element" data-symbol="He" data-mix="He,O,H2" data-row="1" data-col="18">
         <p>He</p>
         <p>Helium</p>
         <div class="main-tooltip">Hélio: O segundo elemento mais abundante no universo.</div>
@@ -61,7 +64,7 @@
         <p>Nitrogen</p>
         <div class="main-tooltip">Lítio: Um metal alcalino macio e prateado.</div>
       </div>
-      <div class="draggable-element element" data-symbol="O" data-mix="O,H2,H2O O,H2O,H2O2" data-row="2" data-col="16">
+      <div class="draggable-element element" data-symbol="O" data-mix="O,O,O2" data-row="2" data-col="16">
         <p>O</p>
         <p>Oxygen</p>
         <div class="main-tooltip">Oxigênio: O elemento mais simples e abundante do universo.</div>
@@ -76,7 +79,46 @@
         <p>Neon</p>
         <div class="main-tooltip">Lítio: Um metal alcalino macio e prateado.</div>
       </div>
-    
+      <div class="draggable-element element" data-symbol="S" data-row="3" data-mix="S,O2,SO2" data-col="16">
+        <p>S</p>
+        <p>Sulfur</p>
+        <div class="main-tooltip">Enxofre.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="P" data-row="3" data-mix="P,O2,P4O6" data-col="15">
+        <p>P</p>
+        <p>Phosphor</p>
+        <div class="main-tooltip">Fósforo.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Cl" data-row="3" data-mix="Cl,O,ClO2" data-col="17">
+        <p>Cl</p>
+        <p>Chlorine</p>
+        <div class="main-tooltip">Cloro.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Br" data-row="4" data-mix="Br,O2,BrO2" data-col="17">
+        <p>Br</p>
+        <p>Bromo</p>
+        <div class="main-tooltip">Bromo.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="I" data-row="5" data-col="17">
+        <p>I</p>
+        <p>Iodo</p>
+        <div class="main-tooltip">Iodo.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Na" data-row="3" data-col="1">
+        <p>Na</p>
+        <p>Sodium</p>
+        <div class="main-tooltip">Sódio.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="K" data-row="4" data-col="1">
+        <p>K</p>
+        <p>Potassium</p>
+        <div class="main-tooltip">Potássio.</div>
+      </div>
+      <div class="draggable-element element" data-symbol="Ca" data-row="4" data-col="2">
+        <p>Ca</p>
+        <p>Calcium</p>
+        <div class="main-tooltip">Calcium.</div>
+      </div>
     <!-- Script -->
     <script src="script.js"></script>
   </body>
