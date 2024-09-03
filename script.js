@@ -298,25 +298,43 @@ function createAtomCanvas(electronConfiguration) {
 function getTooltipContent(symbol) {
     let tooltipContainer, canvasContainer, textContainer;
     const moleculeImages = {
-        'H2O': '',    // Imagem para a molécula de água
-        'CO2': '',    // Imagem para o dióxido de carbono
-        'H2': ' https://upload.wikimedia.org/wikipedia/commons/c/c2/Water_molecule_rotation_animation_large.gif',     // Imagem para a molécula de hidrogênio
-        'CH4': '',    // Imagem para o metano
-        'N2': '',     // Imagem para o nitrogênio molecular
-        'O2': '',     // Imagem para o oxigênio molecular
-        'NO': '',     // Imagem para o monóxido de nitrogênio
-        'NO2': '',    // Imagem para o dióxido de nitrogênio
-        'N2O': '',    // Imagem para o óxido nitroso
-        'SO2': '',    // Imagem para o dióxido de enxofre
-        'SO3': '',    // Imagem para o trióxido de enxofre
-        'H2S': '',    // Imagem para o sulfeto de hidrogênio
-        'P4O10': '',  // Imagem para o tetrafosfato de decaóxido
-        'Cl2': '',    // Imagem para o cloro molecular
-        'ClO': '',    // Imagem para o clorato
-        'Cl2O': '',   // Imagem para o óxido de dicloro
-        'Br2': '',    // Imagem para o bromo molecular
-        'I2': '',     // Imagem para o iodo molecular
-        'I2O5': '',   // Imagem para o pentóxido de diiodo
+        'H2O': 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjA2eWE0MzVyZm81czdkdWtqbTNnaHNobWpkOXRzM2hoaWRyMDg0bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/W4p8ANgBSnmtAvIbaS/giphy.webp',    // Imagem para a molécula de água
+        'CO2': 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHk5aGQ4enh6Y29oZm55dzdkMmZyN2poZTk4MDVmeGt4NXlqZGl1ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/nhMdWYN79qcNyqI7Q6/giphy.webp',    // Imagem para o dióxido de carbono
+        'H2': ' https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3MePc78yuyOe7YeZIeF7A3v3G3v2m6TKRMQ&s',     // Imagem para a molécula de hidrogênio
+        'CH4': 'https://t4.ftcdn.net/jpg/03/02/46/37/360_F_302463704_Obue9Cf1wxXdNQmXSYxm8TrdouWzsbk6.jpg',    // Imagem para o metano
+        'N2': 'https://c8.alamy.com/comp/BKTPRR/stickstoffmolekl-n2-nitrogen-molecule-n2-BKTPRR.jpg',     // Imagem para o nitrogênio molecular
+        'O2': 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXhoZDRxN3MzODlmaW55Z29jM2lmc3Z2ZDBobjIzYzBnMmNjY3dmNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Pwqzq0rIefb644gD5f/giphy.webp',     // Imagem para o oxigênio molecular
+        'NO': 'https://st2.depositphotos.com/4532731/9392/v/950/depositphotos_93922816-stock-illustration-no-nitric-oxide-molecule.jpg',     // Imagem para o monóxido de nitrogênio
+        'NO2': 'https://as1.ftcdn.net/v2/jpg/03/15/50/86/1000_F_315508619_ijcnWTvj6FSzMlik8as51TrFdI7NFq4o.jpg',    // Imagem para o dióxido de nitrogênio
+        'N2O': 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fbr%2Fimages%2Fnitrous-oxide-laughing-gas-n2o-molecule-it-is-used-such-as-a-pharmacologic-agent-to-produce-anesthesia-a-food-additive-as-a-propellant-structural-chemical-formula-and-molecule-model%2F314139162&psig=AOvVaw1ZaoZ_tOUKlWlwk4jGJXgI&ust=1725416083236000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDYq_jZpYgDFQAAAAAdAAAAABAE',    // Imagem para o óxido nitroso
+        'SO2': 'https://homework.study.com/cimages/multimages/16/so2lewis729039065636398019.jpg',    // Imagem para o dióxido de enxofre
+        'SO3': 'https://www.infoescola.com/wp-content/uploads/2019/06/img_5cf5820797c2e.png',    // Imagem para o trióxido de enxofre
+        'H2S': 'https://media.licdn.com/dms/image/D5612AQEzddVw_rvHyA/article-cover_image-shrink_600_2000/0/1684238378687?e=2147483647&v=beta&t=23t6Ehp5iyHDd9CEuUQ9KpkVp6LT-r7mejfdZwPMe-I',    // Imagem para o sulfeto de hidrogênio
+        'P4O10': 'https://upload.wikimedia.org/wikipedia/commons/8/84/Phosphorus-pentoxide-2D-dimensions.svg',  // Imagem para o tetrafosfato de decaóxido
+        'Cl2': 'https://thumbs.dreamstime.com/b/mol%C3%A9cula-do-cloro-do-cl-65588656.jpg',    // Imagem para o cloro molecular
+        'ClO': 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FHypochlorite&psig=AOvVaw2NmOnaQ_sg0v-4nZv7a90e&ust=1725416249815000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCND97cbapYgDFQAAAAAdAAAAABAE',    // Imagem para o clorato
+        'Cl2O': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgv_qUXLa73KfzrsBBMkB44qK9oadvsyKVcg&s',   // Imagem para o óxido de dicloro
+        'Br2': 'https://as1.ftcdn.net/v2/jpg/05/02/07/58/1000_F_502075877_YyIl16JpzHfhGPuJ0XxY3FB0ArB4p6fW.jpg',    // Imagem para o bromo molecular
+        'I2': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdYXJRq5Srz4mcBmnDwfQru6tCsBm4ZS9VEg&s',     // Imagem para o iodo molecular
+        'I2O5': 'https://structimg.guidechem.com/1/13/16692.png',   // Imagem para o pentóxido de diiodo
+        'Li2O': 'https://upload.wikimedia.org/wikipedia/commons/1/19/Lithium-oxide-unit-cell-3D-balls-B.png',
+        'H2O2': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvcg-lCpWRH7GSKGsVPCWjWZRDmJkq3ZvBGg&s',
+        'ClO2': 'https://lh5.googleusercontent.com/proxy/cPqcV3ERGw1QTCaemFpf3XPbzrQNSK5bxl0wYt_8hcEaq-O6fultDC23-UybMY_dLbWAR6zfbTFwNGap4nUPJdP0f4PXfGyvh_AJ-EsjReQFwTHmrISaQ_SUuuV86fOyew     ',
+        'NaCl': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNW8O9Ce2gA2G6u4Vfw3bDV_gpwYPNlY5iKw&s',
+        'NaOH': 'https://labnetwork.com.br/wp-content/uploads/2021/06/antonpaar.jpg',
+        'CO': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJYgMVkbAbBNTKH1DdHrd9gtvuMbzRs2Xpyg&s',
+        'C2': 'https://media.istockphoto.com/id/179236697/tr/foto%C4%9Fraf/c2-molecule.jpg?s=612x612&w=0&k=20&c=c029PV1J5GuEWuFNyPvOCkshxOydX7twMRtJTK_NbsQ=',
+        'CH4': 'https://img.freepik.com/fotos-premium/ch4-metano-formula-quimica-3d-estrutura-quimica-ilustracao-3d_118019-2694.jpg',
+        'C2H4': 'https://as2.ftcdn.net/v2/jpg/01/59/65/53/1000_F_159655329_svwYixwh2SYBfLN4cZzArLf77RKdDHLv.jpg',
+        'C2H2': 'https://i.ytimg.com/vi/EGbTDmKH6Bo/maxresdefault.jpg',
+        'C2H6': 'https://as1.ftcdn.net/v2/jpg/01/57/58/64/1000_F_157586420_ZVjS7dzeqPBFLQuuJICHQLiwHHxwfYC5.jpg',
+        'F2': 'https://previews.123rf.com/images/alidm94/alidm942207/alidm94220700046/188361508-modelo-molecular-da-mol%C3%A9cula-de-fl%C3%BAor-f2-ilustra%C3%A7%C3%A3o-vetorial.jpg',
+        'Cl2': 'https://as1.ftcdn.net/v2/jpg/03/16/19/58/1000_F_316195819_or0U9GF1Bovtqb3MJ2UbEQO8yuuNkThO.jpg',
+        'Br2': 'https://as1.ftcdn.net/v2/jpg/05/02/07/58/1000_F_502075877_YyIl16JpzHfhGPuJ0XxY3FB0ArB4p6fW.jpg',
+        'SO':'https://t4.ftcdn.net/jpg/00/98/93/75/360_F_98937543_0tsDMcAnrwWtZjHBtmHRmGFjjRBD6ZMx.jpg',
+        'O3': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcLQE1dBq5YuVhclbRBMTea06qMxOkU69QRA&s',
+        'SO2':'https://img.freepik.com/vetores-premium/estrutura-da-molecula-de-dioxido-de-enxofre-so2-consistindo-de-enxofre-e-oxigenio-molecula-quimica_530733-2139.jpg',
+        'SO3':'https://media.istockphoto.com/id/1221181300/vector/sulfur-trioxide-so3-molecule-model-and-chemical-formula.jpg?s=612x612&w=is&k=20&c=PoA2rVnuSzmgeZSaPNR-p3rIj9jBkyV5r4W2mk6rC7M='
     };
     
     
@@ -498,8 +516,8 @@ function getDatamix(symbol) {
             break;
 
         // Lítio
-        case 'Li':
-            dataMix = 'Li,O,Li2O';
+        case 'Li2':
+            dataMix = 'Li2,O,Li2O';
             break;
 
         // Berílio
@@ -524,7 +542,10 @@ function getDatamix(symbol) {
 
         // Oxigênio
         case 'O':
-            dataMix = 'O,H2,H2O O,O,O2';
+            dataMix = 'O,H2,H2O O,O,O2 O,O2,O3';
+            break;
+        case 'O2':
+            dataMix = 'O2,O,O3';
             break;
 
         // Flúor
@@ -563,19 +584,30 @@ function getDatamix(symbol) {
             break;
 
         // Cloro
-        case 'Cl':
-            dataMix = 'Cl,Cl,Cl2 Clo,O,ClO Cl2,O,Cl2O';
+        case 'Cl2':
+            dataMix = 'Cl2,O,Cl2O';
+            break;
+            
+        case 'C2':
+            dataMix = 'C2,H,C2H4 C2,H,C2H6 C2,H,C2H2';
             break;
 
         // Bromo
-        case 'Br':
+        case 'Br2':
             dataMix = 'Br2,O,Br2O';
             break;
 
         // Iodo
         case 'I':
+            dataMix = 'I,I,I2 I2,O,I2O5';
+            break;
+        case 'I2':
             dataMix = 'I2,O,I2O5';
             break;
+
+        case 'NaCl':
+        dataMix = 'NaCl,H2O,NaOH';
+        break;
 
         default:
             dataMix = 'Nenhuma reação conhecida';
