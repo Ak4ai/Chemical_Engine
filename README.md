@@ -100,52 +100,59 @@ Para interagir com essas funções, você pode adicionar lógica adicional para 
 
 Aqui estão exemplos de como você pode criar tooltips e data mix para novos elementos, baseando-se no código existente:
 
-### Exemplo de getTooltipContent para Novos Elementos
+Aqui está a atualização do arquivo `README.md` no formato Markdown para o GitHub, com a função `getTooltipContent(symbol)` exemplificando o uso para o H2:
 
-Você pode adicionar um novo caso à função `getTooltipContent(symbol)` para cada novo elemento que deseja adicionar ao projeto. Aqui está um exemplo de como adicionar um tooltip para o elemento "Na" (Sódio):
+```markdown
+# Exemplo de uso da função `getTooltipContent(symbol)`
+
+Este projeto utiliza a função `getTooltipContent(symbol)` para exibir informações e imagens sobre elementos e moléculas em tooltips interativas. A função pode ser estendida facilmente para incluir novos elementos ou moléculas.
+
+## Exemplo de código para o elemento H2
 
 ```javascript
 function getTooltipContent(symbol) {
-    if (symbol === 'Na') {
-        return `
-            <table>
-                <tr>
-                    <td rowspan="2" style="width: 60px;">
-                        <img src="caminho-para-imagem-natrio.png" alt="Sódio" style="width: 60px;">
-                    </td>
-                    <td style="text-transform: uppercase; font-weight: bold; color: #FFF; font-size: larger;">Sódio</td>
-                </tr>
-                <tr>
-                    <td style="font-style: italic; font-size: xx-small;">Elemento Químico</td>
-                </tr>
-                <tr>
-                    <td colspan="2">Sódio: Um metal alcalino muito reativo.</td>
-                </tr>
-            </table>
-        `;
-    }
-    // Adicione mais casos conforme necessário para outros elementos
-    // ...
-    // Se o símbolo do elemento não corresponder a nenhum caso específico, retorne um conteúdo padrão
-    return 'Conteúdo da tooltip para ' + symbol;
+    let tooltipContainer, canvasContainer, textContainer;
+    const moleculeImages = {
+        'H2O': 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjA2eWE0MzVyZm81czdkdWtqbTNnaHNobWpkOXRzM2hoaWRyMDg0bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/W4p8ANgBSnmtAvIbaS/giphy.webp',
+        'CO2': 'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHk5aGQ4enh6Y29oZm55dzdkMmZyN2poZTk4MDVmeGt4NXlqZGl1ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/nhMdWYN79qcNyqI7Q6/giphy.webp',
+        'H2': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3MePc78yuyOe7YeZIeF7A3v3G3v2m6TKRMQ&s',
+        // Adicione mais moléculas aqui conforme necessário
+    };
+
+    // Configurações de elétrons para cada elemento
+    const electronConfigurations = {
+        'H': [1],
+        'He': [2],
+        'Li': [2, 1],
+        // Adicione mais elementos conforme necessário
+    };
+    return tooltipContainer; // Retorna o elemento HTML completo
 }
 ```
-## Exemplo de getDatamix para Novos Elementos
 
-Você pode adicionar lógica à função getDatamix(symbol) para determinar os dados de mistura para novos elementos. Aqui está um exemplo de como adicionar dados de mistura para o elemento "Na" (Sódio):
+## Adicionando novos elementos ou moléculas
+
+Para adicionar um novo elemento ou molécula, basta seguir o exemplo acima e adicionar a imagem correspondente à molécula no objeto `moleculeImages` e a configuração eletrônica no objeto `electronConfigurations`. Por exemplo:
 
 ```javascript
-function getDatamix(symbol) {
-    if (symbol === 'Na') {
-        return 'Na,Cl,NaCl';
-    }
-    // Adicione mais casos conforme necessário para outros elementos
-    // ...
-    // Se o símbolo do elemento não corresponder a nenhum caso específico, retorne uma string vazia ou padrão
-    return '';
+moleculeImages['CH4'] = 'https://path-to-ch4-image.jpg';
+electronConfigurations['O'] = [2, 6]; // Configuração eletrônica para o oxigênio
+```
+
+## Função `getElementInfo(symbol)`
+
+A função `getElementInfo(symbol)` retorna informações específicas sobre o elemento químico ou molécula, como massa atômica, raio atômico, volume molar e configuração eletrônica. Exemplo:
+
+```javascript
+function getElementInfo(symbol) {
+    const elementInfo = {
+        'H': 'MA: 1,008 <br> RA: 1 <br> VM: 1,20×10-5 m3/mol <br> Config E: 1s1',
+        'He': 'MA: 4,0026 <br> RA: 2 <br> VM: 2,18×10-5 m3/mol <br> Config E: 1s2',
+        // Adicione mais elementos conforme necessário
+    };
+    return elementInfo[symbol] || 'Informação não disponível';
 }
 ```
-<br><br><br>
 # Estilização CSS para Novos Programadores
 
 Aqui estão as explicações e funcionalidades do código CSS fornecido, juntamente com orientações para novos programadores:
